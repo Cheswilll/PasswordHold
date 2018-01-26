@@ -5,7 +5,7 @@
  */
 package DAO;
 
-import Entities.User;
+import Entities.Permission;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -14,22 +14,20 @@ import javax.ejb.Local;
  * @author wilson.mora
  */
 @Local
-public interface UserFacadeLocal {
+public interface PermissionFacadeLocal {
 
-    void create(User user);
+    void create(Permission permission);
 
-    void edit(User user);
+    void edit(Permission permission);
 
-    void remove(User user);
+    void remove(Permission permission);
 
-    User find(Object id);
+    Permission find(Object id);
 
-    List<User> findAll();
+    List<Permission> findAll();
 
-    List<User> findRange(int[] range);
-    
+    List<Permission> findRange(int[] range);
+
     int count();
-    
-    User login(String nameUser, String passwordUser);
     
 }

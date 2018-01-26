@@ -6,7 +6,7 @@
 package Entities;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -44,11 +44,13 @@ public class Role implements Serializable {
     private Integer idRole;
     @Column(name = "nameRole")
     private String nameRole;
+    @ManyToMany(mappedBy = "roleList", fetch = FetchType.LAZY)
+    private List<Permission> permissions;
     @JoinTable(name = "userrole", joinColumns = {
         @JoinColumn(name = "idRole", referencedColumnName = "idRole")}, inverseJoinColumns = {
         @JoinColumn(name = "idUser", referencedColumnName = "id")})
     @ManyToMany(fetch = FetchType.LAZY)
-    private Collection<User> userCollection;
+    private List<User> users;
 
     public Role() {
     }
@@ -74,14 +76,26 @@ public class Role implements Serializable {
     }
 
     @XmlTransient
-    public Collection<User> getUserCollection() {
-        return userCollection;
+    public List<Permission> getPermissions() {
+        return permissions;
     }
 
-    public void setUserCollection(Collection<User> userCollection) {
-        this.userCollection = userCollection;
+    public void setPermissions(List<Permission> permissions) {
+        this.permissions = permissions;
     }
 
+    @XmlTransient
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
+
+    
+    
+    
     @Override
     public int hashCode() {
         int hash = 0;

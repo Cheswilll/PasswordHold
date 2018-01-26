@@ -9,6 +9,7 @@ import Entities.User;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -27,6 +28,18 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal 
 
     public UserFacade() {
         super(User.class);
+    }
+
+    @Override
+    public User login(String nameUser, String passwordUser) {
+        try {
+            TypedQuery<User> q = getEntityManager().createNamedQuery("User.findLogin", User.class);
+            q.setParameter("nameUser", nameUser);
+            q.setParameter("passwordUser", passwordUser);
+            return q.getSingleResult();
+        } catch (Exception ex) {
+            return null;
+        }
     }
     
 }

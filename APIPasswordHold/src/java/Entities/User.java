@@ -6,7 +6,7 @@
 package Entities;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -34,6 +34,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "User.findById", query = "SELECT u FROM User u WHERE u.id = :id")
     , @NamedQuery(name = "User.findByNameUser", query = "SELECT u FROM User u WHERE u.nameUser = :nameUser")
     , @NamedQuery(name = "User.findByPasswordUser", query = "SELECT u FROM User u WHERE u.passwordUser = :passwordUser")
+    , @NamedQuery(name = "User.findLogin", query = "SELECT u FROM User u WHERE u.nameUser = :nameUser AND u.passwordUser = :passwordUser")
     , @NamedQuery(name = "User.findByCorreoElectronico", query = "SELECT u FROM User u WHERE u.correoElectronico = :correoElectronico")
     , @NamedQuery(name = "User.findByState", query = "SELECT u FROM User u WHERE u.state = :state")})
 public class User implements Serializable {
@@ -52,10 +53,10 @@ public class User implements Serializable {
     private String correoElectronico;
     @Column(name = "state")
     private Integer state;
-    @ManyToMany(mappedBy = "userCollection", fetch = FetchType.LAZY)
-    private Collection<Role> roleCollection;
+    @ManyToMany(mappedBy = "userList", fetch = FetchType.LAZY)
+    private List<Role> roles;
     @OneToMany(mappedBy = "idUsuario", fetch = FetchType.LAZY)
-    private Collection<PersonalCellar> personalCellarCollection;
+    private List<PersonalCellar> personalCellars;
 
     public User() {
     }
@@ -105,22 +106,24 @@ public class User implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Role> getRoleCollection() {
-        return roleCollection;
+    public List<Role> getRoles() {
+        return roles;
     }
 
-    public void setRoleCollection(Collection<Role> roleCollection) {
-        this.roleCollection = roleCollection;
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
     }
 
     @XmlTransient
-    public Collection<PersonalCellar> getPersonalCellarCollection() {
-        return personalCellarCollection;
+    public List<PersonalCellar> getPersonalCellars() {
+        return personalCellars;
     }
 
-    public void setPersonalCellarCollection(Collection<PersonalCellar> personalCellarCollection) {
-        this.personalCellarCollection = personalCellarCollection;
+    public void setPersonalCellars(List<PersonalCellar> personalCellars) {
+        this.personalCellars = personalCellars;
     }
+
+    
 
     @Override
     public int hashCode() {
